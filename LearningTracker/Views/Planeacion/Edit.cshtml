@@ -1,0 +1,96 @@
+﻿@model LearningTracker.Models.PlaneacionViewModels
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>PlaneacionViewModels</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEstimatedInicio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEstimatedInicio, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.DateEstimatedInicio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEstimatedFin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEstimatedFin, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.DateEstimatedFin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DurationEstimated, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DurationEstimated, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DurationEstimated, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.IdPlaneacion)
+        @Html.HiddenFor(model => model.AssignedCourseId)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Assignment")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+        //scopes public y private
+        //module pattern
+        var newAssignment = (function () {
+            //privado
+
+            //este método si es accesible
+            var start = function () {
+                //Se puede poner en el layout
+                Globalize.culture("es-MX"); //Not sure that it's your locale, maby you need other
+                $.validator.methods.date = function (value, element) {
+                    return this.optional(element) || Globalize.parseDate(value);
+                };
+                $('.datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    language: 'es-MX',
+                    autoclose: true
+                });
+
+            }
+
+            //Este método no está accesible
+            var doSave = function(){
+
+            }
+            //público
+            return {
+                start:start
+            }
+        })();
+
+        $(function () {
+            var module = newAssignment;
+            module.start();
+        });
+
+</script>
+}

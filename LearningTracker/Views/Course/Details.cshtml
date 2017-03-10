@@ -1,0 +1,57 @@
+﻿@model LearningTracker.Models.DetailsTopicCourseViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CourseViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DurationAVG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DurationAVG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        @foreach (var topic in Model.Topics)
+        {
+        <div class="[ form-group ]">
+            <input type="checkbox" name="SelectTopics" id="@topic.Id.Value@topic.Name" autocomplete="off" checked disabled/>
+            <div class="[ btn-group ]">
+                <label for="@topic.Id.Value@topic.Name" class="[ btn btn-primary ]">
+                    <span class="[ glyphicon glyphicon-ok ]"></span>
+                    <span> </span>
+                </label>
+                <label for="@topic.Id.Value@topic.Name" class="[ btn btn-default active ]">
+                    @topic.Name
+                </label>
+            </div>
+        </div>
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
